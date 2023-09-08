@@ -1,8 +1,20 @@
+<img src="https://i.imgur.com/TaXRGim.png" alt="Festival Food" id="app-image" style="width: 100%; height: auto; display: block; margin: auto;">
 <h1>Create Account</h1>
+
+
+<div class="login-container">
+
+
 <p *ngIf="error">{{ error }}</p>
-<input placeholder="Enter your email address..." [(ngModel)]="email">
+<label class="login-input-title" for="username">Email Address</label>  <br><br>
+<input id="username" placeholder="Enter your email address..." [(ngModel)]="email">
+<label class="login-input-title" for="password">Password</label>  <br> <br>
 <input placeholder="Enter your password..." type="password" [(ngModel)]="password">
 <input placeholder="Re-enter your password" type="password" [(ngModel)]="confirmPassword">
 
-<a routerLink="/login">Already have an account? Log In</a>
-<button (click)="createAccount()">Create Account</button>
+<button class="create-account-button" (click)="createAccount()">Create Account</button><br>
+<a class="login-page-blue-link" routerLink="/login">Already have an account? Log In</a>
+
+</div>
+
+<br><br><br><br><br><br><br><br><br><br>

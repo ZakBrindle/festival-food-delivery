@@ -1,5 +1,79 @@
-<h1>Home</h1>
-<div *ngIf="user">
+<img src="https://i.imgur.com/TaXRGim.png" alt="Festival Food" id="app-image" style="width: 100%; height: auto; display: block; margin: auto;" *ngIf="showMainImage">
+<div id="select-address-container" *ngIf="!showGlampingSection && !showCampingSection && !showMenu">
+   
+    <div id="glamping-or-cards-container">
+   
+      <button id="glamping-btn" class="option-button" 
+      [style.backgroundImage]="'url(' + glampingImageUrl + ')'" (click)="showGlamping()">
+  Glamping
+  </button>
+  
+  
+  <button id="cards-btn" class="option-button" 
+      [style.backgroundImage]="'url(' + cardsImageUrl + ')'" (click)="showCamping()">
+  Camping
+  </button>
+  
+  </div>
+  <h1 style="text-align: center;">Select Delivery Location</h1><br>
+  </div>
+
+<button id="menuButton" (click)="showSettingsMenu()">
+  <img src="https://i.imgur.com/vOjWmEL.png" alt="Menu">
+</button>
+   
+<div style="text-align: center;" id="notification" *ngIf="showNotification">
+    <h2 style="text-align: center;" class="main-title">Delivery Status</h2><br>
+    <p style="text-align: center;" class="main-text" id="status-text">Delivery is currently <span id="status">offline</span>. <br></p>
+ 
+    <br>
+    <p style="text-align: center;" class="main-text">Only available at</p><br>
+    <img style="text-align: center;" src="https://i.imgur.com/u8N7oFu.png" alt="Beatherder" id="bh-image">
+  </div>
+
+
+
+
+
+
+<div id="glamping-container" *ngIf="showGlampingSection">
+    <img id="glamping-img" class="delivery-image" 
+    [src]="glampingImageUrl" alt="Glamping">
+    <h2>Select a Yurt or Bell Tent</h2>
+    <div class="center-div-dropdown">
+      <select class="delivery-dropdown-glamping">
+        <optgroup *ngFor="let group of groups" [label]="group">
+          <option *ngFor="let option of options" [value]="group + option">{{group}}{{option}}</option>
+        </optgroup>
+      </select>
+    </div>
+    
+    <button class="next-button-address" (click)="selectAddress()">Order Food</button>
+    <button class="back-button-address" (click)="goBack()">Go Back</button>
+  </div>
+  
+  <div id="cards-container" *ngIf="showCampingSection">
+    <img id="cards-img" class="delivery-image" 
+    [src]="cardsImageUrl" alt="Playing Cards">
+    <h2>Select a Playing Card</h2>
+    <h3>Meet us by the playing card with some form of ID</h3>
+
+    <div class="center-div-dropdown">
+      <select class="delivery-dropdown-camping">
+        <optgroup *ngFor="let groupCamping of groupsCamping" [label]="groupCamping">
+          <option *ngFor="let optionCamping of optionsCamping" [value]="optionCamping + ' of ' + groupCamping">{{optionCamping}} of {{groupCamping}}</option>
+        </optgroup>
+      </select>
+    </div>
+    <button class="next-button-address" (click)="selectAddress()">Order Food</button>
+    <button class="back-button-address" (click)="goBack()">Go Back</button>
+
+  </div>
+  
+  
+
+ <br>
+  <div style="text-align: center;" *ngIf="user">
     <p>Email Address: {{ user.email }}</p>
     <p>Firebase Id: {{ user.id }}</p>
     <p>You last logged in at: {{ user.lastSignInTime }}</p>
@@ -8,5 +82,56 @@
 
 
 </div>
-<button (click)="logOut()">Log out</button>
 
+
+<div *ngIf="showMenu" id="menu">
+    
+  <hr width="80%"><br><br>
+<h3>Estimated Delivery: 10-30 mins</h3>
+<h3>Minimum Order: £16</h3>
+
+
+
+   <button id="btn-food-filter" class="filter-button" (click)="toggleFilter('food')" [class.active]="foodToggle">Food</button>
+<button id="btn-drink-filter" class="filter-button" (click)="toggleFilter('drink')" [class.active]="drinkToggle">Drink</button>
+
+    
+    <div id="food-list-container">
+      <!-- Food items will be dynamically added here -->
+      <div *ngFor="let item of items">
+        <div class="card-container" *ngIf="(item.type === 'food' && foodToggle) || (item.type === 'drink' && drinkToggle)">
+          <img [src]="item.imgUrl" class="card-img-left" [alt]="item.name">
+          <div class="card-body">
+           
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-price">£{{item.price}}</p>
+            <button class="btn-order-item">Add to basket</button>
+         
+          </div>
+        </div>
+      </div>
+      
+    
+
+
+  </div>
+  </div>
+
+
+  <br><br>
+  <img id="back-bg" (click)="hideSettingsMenu()" src="https://i.imgur.com/Q3dNnVy.png" *ngIf="settingsMenu" />
+
+
+  <div class="settings-container" *ngIf="settingsMenu">
+
+   
+    <button class="pill-button-delivery-toggle" id="delivery-toggle">Toggle Delivery</button><br>
+    <br>
+    <hr width="80%"><br>
+    <button class="pill-button" id="order-history-btn" type="submit">Order History</button><br>
+    <button (click)="logOut()" class="pill-button" id="logout-button" type="submit">Logout</button>
+  
+    
+  </div>
+  
+  <br><br> 
