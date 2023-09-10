@@ -5,3 +5,12 @@ export interface UserInfo {
     fullName: string,
     bio: string,
 }
+
+
+export interface Order {
+    vendorID: number;
+    number: number;
+    time: string;
+    total: string;
+    description: string;
+  }

@@ -13,7 +13,7 @@
 
 
     <button id="guest-login-button" class="guest-login-button">Order as guest</button>  <br>
-    <p class="deliveryLoginMessage">Order food as a guest or login to deliver.</p> <br>
+    <p class="deliveryLoginMessage">Order food as a guest or login below.</p> <br>
     <hr width="80%"><br>
     <label class="login-input-title" for="username">Email Address</label>    <br> <br>
     <input 
@@ -26,17 +26,20 @@
     placeholder="Enter your password.."
     [(ngModel)]="password" /><br>
     <p *ngIf="error">{{ error }}</p>   <br>
-    <button (click)="logIn()" class="delivery-login-button" type="submit">Delivery login</button>
-    <br>
-    <a class="login-page-blue-link" routerLink="/create-account">Don't have an account? Create one</a>
+    <button (click)="logIn()" class="delivery-login-button" type="submit">Login</button>
+    <br> <br> <br>
+    <a style="font-size: 18px;" class="login-page-blue-link" routerLink="/create-account">Don't have an account? Create one</a>
+<br><br>
+<a style="font-size: 18px;" class="login-page-blue-link" routerLink="/forgot-password">Forgot your password? Click here</a>
 
 
 
 
 
 
-    <br><br> <br> <br> <br> <br> <br> <br>
 
 
     
 </div>
+
+<br><br> <br> <br> <br> <br> <br> <br>

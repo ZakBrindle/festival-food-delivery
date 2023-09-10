@@ -1,4 +1,9 @@
 <img src="https://i.imgur.com/TaXRGim.png" alt="Festival Food" id="app-image" style="width: 100%; height: auto; display: block; margin: auto;" *ngIf="showMainImage">
+
+
+
+
+<!-- SELECT ADDRESS - ONLY SHOWN WHEN DELIVERY IS ACTIVE -->
 <div id="select-address-container" *ngIf="!showGlampingSection && !showCampingSection && !showMenu">
    
     <div id="glamping-or-cards-container">
@@ -13,10 +18,14 @@
       [style.backgroundImage]="'url(' + cardsImageUrl + ')'" (click)="showCamping()">
   Camping
   </button>
-  
-  </div>
-  <h1 style="text-align: center;">Select Delivery Location</h1><br>
-  </div>
+</div>
+<h2 style="text-align: center; color: rgb(70, 70, 70); font-size: 50px; margin-bottom: -50px;">^</h2><br>
+  <h2 style="text-align: center; color: rgb(70, 70, 70); font-size: 30px;">Select Delivery Location</h2><br>
+
+
+
+
+  </div><!-- END OF SELECT ADDRESS - ONLY SHOWN WHEN DELIVERY IS ACTIVE -->
 
 <button id="menuButton" (click)="showSettingsMenu()">
   <img src="https://i.imgur.com/vOjWmEL.png" alt="Menu">
@@ -135,3 +144,98 @@
   </div>
   
   <br><br> 
+
+
+  <i class="fas fa-hat-chef"></i>
+
+  <!-- VENDOR LOGIN -->
+  <div class="options-container" id="vendor-container">
+    <i class="fas fa-hat-chef"></i>
+
+    <div *ngIf="showVendorMainMenu" id="vendor-mainmenu">
+
+      <i class="fas fa-hat-chef"></i>
+      
+      <p style="text-align: center;" class="main-title">Vendor Menu</p><br><br>
+      <p style="text-align: center; font-size: 20px;" class="main-text">Check for incoming deliveries and<br> start preparing the order</p>
+      
+      <br>
+      
+      <br>
+      <button (click)="showIncomingOrders()" id="vendor-incoming-orders-btn" class="pill-button">View Incoming Orders</button>  <br>  <br> 
+      
+        <hr width="80%"><br> 
+        <button (click)="showOrderHistory()" id="vendor-order-history-btn" class="pill-button">View Order History</button>  <br> 
+       
+        
+        <button (click)="logOut()" class="pill-button" id="logout-button" type="submit">Logout</button>   
+      </div>
+    
+
+      
+<!--  INCOMING ORDERS  -->
+      <div *ngIf="showVendorIncomingOrders" id="vendor-incoming-orders">
+        <p style="text-align: center;" class="main-title">
+          <i class="fa fa-arrow-circle-down" aria-hidden="true"></i></p><br>
+        <p style="text-align: center;" class="main-title">Incoming Orders</p>
+      
+        <br>
+        <p style="text-align: center; font-size: 20px;" class="main-text">A festival-food delivery guru has <br>confirmed the order and is on their way.<br></p>
+        <br>
+
+        <ul id="orders-list">
+          <li *ngFor="let order of incomingorders" class="order-item">
+            <span class="order-number">{{ order.number }}</span>
+            <span class="order-details">
+              Order {{ order.vendorID + "-" + order.number }} <br>
+              <span class="order-time">{{ order.time }}</span> <br>
+              {{ order.description }} = total {{ order.total }}
+            </span>
+          </li>
+        </ul>  
+
+<br><br>
+        <hr width="80%"><br> 
+        <button (click)="goBackToMainMenuFromIncomingOrders()" id="vendor-incoming-orders-backbtn" class="pill-button">Back</button>  <br> 
+        
+      </div>
+
+
+
+
+<!-- ORDER HISTORY -->
+      <div *ngIf="showVendorOrderHistory" id="vendor-order-history">
+        <p style="text-align: center;" class="main-title">
+          <i class="fa fa-history" aria-hidden="true"></i></p><br>
+        <p style="text-align: center;" class="main-title">Order History</p>
+       
+        <br>
+        <p style="text-align: center; font-size: 20px;" class="main-text">Take a look at all the orders we completed together! <br>Serving the heard with a smile.<br></p>
+        <br>
+
+        <ul id="orders-list">
+          <li *ngFor="let order of orderhistory" class="order-item">
+            <span class="order-number">{{ order.number }}</span>
+            <span class="order-details">
+              Order Number: {{ order.vendorID + "-" + order.number }} <br>
+              <span class="order-time">{{ order.time }}</span> <br>
+              {{ order.description }} = total {{ order.total }}
+            </span>
+          </li>
+        </ul>  
+
+<br><br>
+        <hr width="80%"><br> 
+        <button (click)="goBackToMainMenuFromOrderHistory()" id="vendor-order-history-backbtn" class="pill-button">Back</button>  <br> 
+        
+      </div>
+      
+      
+      
+    </div>
+
+    <br><br> 
+    <br><br> 
+    <br><br> 
+    <br><br> 
+    <br><br> 

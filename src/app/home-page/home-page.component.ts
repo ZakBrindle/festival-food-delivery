@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { UserInfo } from '../types';
+import { UserInfo, Order } from '../types';
 
 @Component({
   selector: 'app-home-page',
@@ -12,6 +12,9 @@ import { UserInfo } from '../types';
 })
 export class HomePageComponent {
   user: UserInfo | null = null;
+
+ 
+  
 
   foodToggle = true;
   drinkToggle = true;
@@ -214,4 +217,53 @@ export class HomePageComponent {
 
 
 
+
+
+// VENDOR LOGIN ELEMENTS AND FUNCTIONS ------------------------
+
+  incomingorders: Order[] = [
+    { vendorID: 10, number: 1, time: '2023-09-10 12:30', total: '£84', description: 'Mexican Burrito x 4' },
+    { vendorID: 10, number: 2, time: '2023-09-09 15:20', total: '£50', description: 'Pizza x 2' },
+    // Add more orders here
+  ];
+
+  orderhistory: Order[] = [
+    { vendorID: 10, number: 1, time: '2022-08-10 15:30', total: '£25', description: 'Pizza x 1' },
+    { vendorID: 10, number: 2, time: '2022-08-09 19:20', total: '£18', description: 'Caramel Latte x 2' },
+    // Add more orders here
+  ];
+
+  public showVendorMainMenu: boolean = true;
+  public showVendorIncomingOrders: boolean = false;
+  public showVendorOrderHistory: boolean = false;
+  showIncomingOrders(): void {
+    this.showVendorMainMenu = false;
+    this.showVendorIncomingOrders = true;
+    this.showVendorOrderHistory = false;
+  }
+  
+  showOrderHistory(): void {
+    this.showVendorMainMenu = false;
+    this.showVendorIncomingOrders = false;
+    this.showVendorOrderHistory = true;
+  }
+  
+  goBackToMainMenuFromIncomingOrders(): void {
+    this.showVendorMainMenu = true;
+    this.showVendorIncomingOrders = false;
+  }
+  
+  goBackToMainMenuFromOrderHistory(): void {
+    this.showVendorMainMenu = true;
+    this.showVendorOrderHistory = false;
+  }
+
+
+
+
+
+
+
 }
+  
+  
