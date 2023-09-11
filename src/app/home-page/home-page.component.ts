@@ -1,16 +1,17 @@
 
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { UserInfo, Order } from '../types';
+import { Stripe, PaymentIntent } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
   user: UserInfo | null = null;
 
  
@@ -24,7 +25,8 @@ export class HomePageComponent {
   options: number[] = Array.from({length: 30}, (_, i) => i + 1); // creates an array [1, 2, ..., 30]
 
   groupsCamping: string[] = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
-  optionsCamping: number[] = Array.from({length: 6}, (_, i) => i + 2); // creates an array [2, 3, ..., 7]
+  optionsCamping: string[] = Array.from({length: 6}, (_, i) => i === 0 ? 'Ace' : (i + 1).toString());
+
 
   public showGlampingSection: boolean = false;
   public showCampingSection: boolean = false;
@@ -149,6 +151,12 @@ export class HomePageComponent {
     // add more items here
   ];
 
+
+
+
+
+
+
   constructor(
     private auth: AngularFireAuth,
     private router: Router,
@@ -182,35 +190,18 @@ export class HomePageComponent {
 
 
 
-  
+  // TOGGLE FOOD AND DRINK ---------------
+
   toggleFilter(filterType: string) {
-    if (filterType === 'food') {
-        this.foodToggle = !this.foodToggle;
+    if (filterType === 'food') {      
+      this.drinkToggle = false;
+        this.foodToggle = true;
+
     } else if (filterType === 'drink') {
-        this.drinkToggle = !this.drinkToggle;
+      this.foodToggle = false;
+        this.drinkToggle = true;        
     }
-
-    if(this.foodToggle)
-    {
-      // show food items
-
-    }
-    else
-    {
-      // hide food items
-
-    }
-
-    if(this.drinkToggle)
-    {
-      // show drink items
-      
-    }
-    else
-    {
-      // hide drink items
-
-    }    
+   
   }
 
 
@@ -219,7 +210,38 @@ export class HomePageComponent {
 
 
 
+
+
+
 // VENDOR LOGIN ELEMENTS AND FUNCTIONS ------------------------
+
+
+// Component logic
+toggleOrders: boolean = true; // You can set the default state
+
+toggleDeliveries: boolean = true; // You can set the default state
+showDeliveriesOfflineMessage: boolean = false;
+
+toggleOrderStatus() {
+  if (this.toggleOrders) {
+    // Logic to turn ON orders
+    
+  } else {
+    // Logic to turn OFF orders
+    
+  }
+}
+
+toggleDeliveryStatus() {
+  if (this.toggleDeliveries) {
+    // Logic to turn ON deliveries (for delivery ninja)
+    
+  } else {
+    // Logic to turn OFF deliveries (for delivery ninja)
+  }
+}
+
+
 
   incomingorders: Order[] = [
     { vendorID: 10, number: 1, time: '2023-09-10 12:30', total: '£84', description: 'Mexican Burrito x 4' },
@@ -233,9 +255,12 @@ export class HomePageComponent {
     // Add more orders here
   ];
 
+  // FOR VENDOR
+
   public showVendorMainMenu: boolean = true;
   public showVendorIncomingOrders: boolean = false;
   public showVendorOrderHistory: boolean = false;
+
   showIncomingOrders(): void {
     this.showVendorMainMenu = false;
     this.showVendorIncomingOrders = true;
@@ -256,6 +281,35 @@ export class HomePageComponent {
   goBackToMainMenuFromOrderHistory(): void {
     this.showVendorMainMenu = true;
     this.showVendorOrderHistory = false;
+  }
+
+  
+  // FOR DELIVERY NINJA
+
+  public showDeliveryNinjaMainMenu: boolean = true;
+  public showDeliveryNinjaIncomingOrders: boolean = false;
+  public showDeliveryNinjaOrderHistory: boolean = false;
+
+  showIncomingOrders_deliveryNinja(): void {
+    this.showDeliveryNinjaMainMenu = false;
+    this.showDeliveryNinjaIncomingOrders = true;
+    this.showDeliveryNinjaOrderHistory = false;
+  }
+  
+  showOrderHistory_deliveryNinja(): void {
+    this.showDeliveryNinjaMainMenu = false;
+    this.showDeliveryNinjaIncomingOrders = false;
+    this.showDeliveryNinjaOrderHistory = true;
+  }
+  
+  goBackToMainMenuFromIncomingOrders_deliveryNinja(): void {
+    this.showDeliveryNinjaMainMenu = true;
+    this.showDeliveryNinjaIncomingOrders = false;
+  }
+  
+  goBackToMainMenuFromOrderHistory_deliveryNinja(): void {
+    this.showDeliveryNinjaMainMenu = true;
+    this.showDeliveryNinjaOrderHistory = false;
   }
 
 

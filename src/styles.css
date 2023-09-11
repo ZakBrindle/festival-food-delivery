@@ -210,6 +210,26 @@ body {
     background-color: rgb(151, 212, 233);
     color: white;
   }
+
+  .pill-button-green {
+    border: none;
+    border-radius: 50px;
+    padding: 12px 80px; 
+    font-size: 24px;
+    background-color: #9FC34D;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    width: 100%;  
+  }
+ 
+  
+  .pill-button-green:hover {
+    background-color: #abc56d;
+    color: white;
+  }
   
   .pill-button-delivery-toggle {
     border: none;

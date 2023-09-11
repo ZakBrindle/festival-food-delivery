@@ -4,7 +4,7 @@
 
 
 <!-- SELECT ADDRESS - ONLY SHOWN WHEN DELIVERY IS ACTIVE -->
-<div id="select-address-container" *ngIf="!showGlampingSection && !showCampingSection && !showMenu">
+<div [hidden]="!toggleDeliveries" id="select-address-container" *ngIf="!showGlampingSection && !showCampingSection && !showMenu">
    
     <div id="glamping-or-cards-container">
    
@@ -19,8 +19,8 @@
   Camping
   </button>
 </div>
-<h2 style="text-align: center; color: rgb(70, 70, 70); font-size: 50px; margin-bottom: -50px;">^</h2><br>
-  <h2 style="text-align: center; color: rgb(70, 70, 70); font-size: 30px;">Select Delivery Location</h2><br>
+<p class="main-text" style="text-align: center; color: rgb(70, 70, 70); font-size: 25px; margin-bottom: -50px;">^</p><br>
+  <br><h2 style="text-align: center; color: rgb(70, 70, 70); font-size: 30px;">Select Delivery Location</h2><br>
 
 
 
@@ -31,15 +31,13 @@
   <img src="https://i.imgur.com/vOjWmEL.png" alt="Menu">
 </button>
    
-<div style="text-align: center;" id="notification" *ngIf="showNotification">
+<div [hidden]="toggleDeliveries" style="text-align: center;" id="notification" *ngIf="showNotification">
     <h2 style="text-align: center;" class="main-title">Delivery Status</h2><br>
-    <p style="text-align: center;" class="main-text" id="status-text">Delivery is currently <span id="status">offline</span>. <br></p>
+    <p style="text-align: center;" class="main-text" id="status-text">Delivery is currently <span id="status">offline</span>. <br>There are no delivery ninjas available.<br></p>
  
     <br>
-    <p style="text-align: center;" class="main-text">Only available at</p><br>
-    <img style="text-align: center;" src="https://i.imgur.com/u8N7oFu.png" alt="Beatherder" id="bh-image">
+ 
   </div>
-
 
 
 
@@ -82,22 +80,13 @@
   
 
  <br>
-  <div style="text-align: center;" *ngIf="user">
-    <p>Email Address: {{ user.email }}</p>
-    <p>Firebase Id: {{ user.id }}</p>
-    <p>You last logged in at: {{ user.lastSignInTime }}</p>
-    <p>Your name is {{ user.fullName }}</p>
-    <p>A little bit about you: {{ user.bio }}</p>
-
-
-</div>
 
 
 <div *ngIf="showMenu" id="menu">
     
   <hr width="80%"><br><br>
-<h3>Estimated Delivery: 10-30 mins</h3>
-<h3>Minimum Order: £16</h3>
+<h3>Estimated Delivery: 15-45 mins</h3>
+<h3>Minimum Order: £10</h3>
 
 
 
@@ -105,25 +94,25 @@
 <button id="btn-drink-filter" class="filter-button" (click)="toggleFilter('drink')" [class.active]="drinkToggle">Drink</button>
 
     
-    <div id="food-list-container">
-      <!-- Food items will be dynamically added here -->
-      <div *ngFor="let item of items">
-        <div class="card-container" *ngIf="(item.type === 'food' && foodToggle) || (item.type === 'drink' && drinkToggle)">
-          <img [src]="item.imgUrl" class="card-img-left" [alt]="item.name">
-          <div class="card-body">
-           
-            <h5 class="card-title">{{item.name}}</h5>
-            <p class="card-price">£{{item.price}}</p>
-            <button class="btn-order-item">Add to basket</button>
-         
-          </div>
-        </div>
+<div id="food-list-container">
+  <!-- Food items will be dynamically added here -->
+  <div *ngFor="let item of items">
+    <div class="card-container" *ngIf="(item.type === 'food' && foodToggle) || (item.type === 'drink' && drinkToggle)">
+      <img [src]="item.imgUrl" class="card-img-left" [alt]="item.name">
+      <div class="card-body">
+       
+        <h5 class="card-title">{{item.name}}</h5>
+        <p class="card-price">£{{item.price}}</p>
+        <button class="btn-order-item add-to-basket" (click)="addItemToBasket(item)">Add to basket</button>
+        <span *ngIf="item.inBasket" class="is-active">In basket</span>
       </div>
-      
-    
-
-
+    </div>
   </div>
+  
+
+
+
+</div>
   </div>
 
 
@@ -146,23 +135,39 @@
   <br><br> 
 
 
-  <i class="fas fa-hat-chef"></i>
+
 
   <!-- VENDOR LOGIN -->
   <div class="options-container" id="vendor-container">
-    <i class="fas fa-hat-chef"></i>
+    <p [hidden]="toggleOrders" id="vendor-status-text-main" style="text-align: center;" class="vendor-status-text-main">DELIVERIES OFFLINE</p>
+    <p class="vendor-id-text-main">VENDOR ID<br>10</p>
+    
 
     <div *ngIf="showVendorMainMenu" id="vendor-mainmenu">
+
+      
 
       <i class="fas fa-hat-chef"></i>
       
       <p style="text-align: center;" class="main-title">Vendor Menu</p><br><br>
+
+      
+
       <p style="text-align: center; font-size: 20px;" class="main-text">Check for incoming deliveries and<br> start preparing the order</p>
       
       <br>
       
       <br>
-      <button (click)="showIncomingOrders()" id="vendor-incoming-orders-btn" class="pill-button">View Incoming Orders</button>  <br>  <br> 
+
+      <div class="order-toggle-container">
+        <p class="toggle-text">Toggle Delivery</p>
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="toggleOrders" (change)="toggleOrderStatus()">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <button (click)="showIncomingOrders()" id="vendor-incoming-orders-btn" class="pill-button-green">View Incoming Orders</button>  <br>  <br> 
       
         <hr width="80%"><br> 
         <button (click)="showOrderHistory()" id="vendor-order-history-btn" class="pill-button">View Order History</button>  <br> 
@@ -239,3 +244,127 @@
     <br><br> 
     <br><br> 
     <br><br> 
+
+
+
+
+
+    
+  <!-- DELIVERY NINJA LOGIN -->
+  <div class="options-container" id="delivery-ninja-container">
+    <p [hidden]="toggleDeliveries" id="delivery-status-text-main" style="text-align: center;" class="vendor-status-text-main">DELIVERIES OFFLINE</p>
+    
+
+    <div *ngIf="showDeliveryNinjaMainMenu" id="delivery-ninja-mainmenu">
+
+      
+
+      <i class="fas fa-hat-chef"></i>
+      
+      <p style="text-align: center;" class="main-title">Delivery Ninja Menu</p><br><br>
+
+      
+
+      <p style="text-align: center; font-size: 20px;" class="main-text">Check for incoming deliveries and<br> start preparing the order</p>
+      
+      <br>
+      
+      <br>
+
+      <div class="order-toggle-container">
+        <p class="toggle-text">Toggle Delivery</p>
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="toggleDeliveries" (change)="toggleDeliveryStatus()">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <button (click)="showIncomingOrders_deliveryNinja()" id="delivery-ninja-incoming-orders-btn" class="pill-button-green">View Incoming Orders</button>  <br>  <br> 
+      
+        <hr width="80%"><br> 
+        <button (click)="showOrderHistory_deliveryNinja()" id="delivery-ninja-order-history-btn" class="pill-button">View Order History</button>  <br> 
+       
+        
+        <button (click)="logOut()" class="pill-button" id="logout-button" type="submit">Logout</button>   
+      </div>
+    
+
+      
+<!--  INCOMING ORDERS  -->
+      <div *ngIf="showDeliveryNinjaIncomingOrders" id="delivery-ninja-incoming-orders">
+        <p style="text-align: center;" class="main-title">
+          <i class="fa fa-arrow-circle-down" aria-hidden="true"></i></p><br>
+        <p style="text-align: center;" class="main-title">Incoming Orders</p>
+      
+        <br>
+        <p style="text-align: center; font-size: 20px;" class="main-text">A festival-food delivery guru has <br>confirmed the order and is on their way.<br></p>
+        <br>
+
+        <ul id="orders-list">
+          <li *ngFor="let order of incomingorders" class="order-item">
+            <span class="order-number">{{ order.number }}</span>
+            <span class="order-details">
+              Order {{ order.vendorID + "-" + order.number }} <br>
+              <span class="order-time">{{ order.time }}</span> <br>
+              {{ order.description }} = total {{ order.total }}
+            </span>
+          </li>
+        </ul>  
+
+<br><br>
+        <hr width="80%"><br> 
+        <button (click)="goBackToMainMenuFromIncomingOrders_deliveryNinja()" id="delivery-ninja-incoming-orders-backbtn" class="pill-button">Back</button>  <br> 
+        
+      </div>
+
+
+
+
+<!-- ORDER HISTORY -->
+      <div *ngIf="showDeliveryNinjaOrderHistory" id="delivery-ninja-order-history">
+        <p style="text-align: center;" class="main-title">
+          <i class="fa fa-history" aria-hidden="true"></i></p><br>
+        <p style="text-align: center;" class="main-title">Order History</p>
+       
+        <br>
+        <p style="text-align: center; font-size: 20px;" class="main-text">Take a look at all the orders we completed together! <br>Serving the heard with a smile.<br></p>
+        <br>
+
+        <ul id="orders-list">
+          <li *ngFor="let order of orderhistory" class="order-item">
+            <span class="order-number">{{ order.number }}</span>
+            <span class="order-details">
+              Order Number: {{ order.vendorID + "-" + order.number }} <br>
+              <span class="order-time">{{ order.time }}</span> <br>
+              {{ order.description }} = total {{ order.total }}
+            </span>
+          </li>
+        </ul>  
+
+<br><br>
+        <hr width="80%"><br> 
+        <button (click)="goBackToMainMenuFromOrderHistory_deliveryNinja()" id="delivery-ninja-order-history-backbtn" class="pill-button">Back</button>  <br> 
+        
+      </div>
+      
+      
+      
+    </div>
+
+    <br>
+    
+    
+<div  style="text-align: center;" id="onlyAtBH">   
+  <p style="text-align: center;" class="main-text">Only available at</p><br>
+  <img style="text-align: center;" src="https://i.imgur.com/u8N7oFu.png" alt="Beatherder" id="bh-image">
+</div>
+    <br><br><br>
+    <div style="text-align: center;" *ngIf="user">
+      <p>Email Address: {{ user.email }}</p>
+      <p>Firebase Id: {{ user.id }}</p>
+      <p>You last logged in at: {{ user.lastSignInTime }}</p>
+      <p>Your name is {{ user.fullName }}</p>
+      <p>A little bit about you: {{ user.bio }}</p>
+  
+  
+  </div>
