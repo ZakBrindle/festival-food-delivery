@@ -1,0 +1,19 @@
+<div class="registration-container">
+    <h1>Register Your Interest</h1>
+    <form #vendorForm="ngForm" (ngSubmit)="onSubmit(vendorForm)">
+      <label for="full-name">Full Name:</label>
+      <input type="text" id="full-name" [(ngModel)]="fullName" name="fullName" required>
+  
+      <label for="business-name">Business Name:</label>
+      <input type="text" id="business-name" [(ngModel)]="businessName" name="businessName" required>
+  
+      <label for="email">Email:</label>
+      <input type="email" id="email" [(ngModel)]="email" name="email" required>
+  
+      <label for="contact-number">Contact Number:</label>
+      <input type="tel" id="contact-number" [(ngModel)]="contactNumber" name="contactNumber" required>
+  
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  

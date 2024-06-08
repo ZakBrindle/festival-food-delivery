@@ -11,13 +11,15 @@ import { environment } from 'src/environment/environment';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { CreateAccountPageComponent } from './create-account-page/create-account-page.component';
+import { JoinComponent } from './join/join.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     HomePageComponent,
-    CreateAccountPageComponent
+    CreateAccountPageComponent,
+    JoinComponent
   ],
   imports: [
     BrowserModule,

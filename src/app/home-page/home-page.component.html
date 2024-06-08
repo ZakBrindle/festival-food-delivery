@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/TaXRGim.png" alt="Festival Food" id="app-image" style="width: 100%; height: auto; display: block; margin: auto;" *ngIf="showMainImage">
+<img src="https://i.imgur.com/TaXRGim.png" alt="Festival Food" id="app-image" style="max-width: 1000px; width: 100%; height: auto; display: block; margin: auto;" *ngIf="showMainImage">
 
 
 
@@ -8,22 +8,20 @@
    
     <div id="glamping-or-cards-container">
    
-      <button id="glamping-btn" class="option-button" 
+      <button style="max-width: 500px;" id="glamping-btn" class="option-button" 
       [style.backgroundImage]="'url(' + glampingImageUrl + ')'" (click)="showGlamping()">
   Glamping
   </button>
   
   
-  <button id="cards-btn" class="option-button" 
+  <button style="max-width: 500px;" id="cards-btn" class="option-button" 
       [style.backgroundImage]="'url(' + cardsImageUrl + ')'" (click)="showCamping()">
   Camping
   </button>
 </div>
 <p class="main-text" style="text-align: center; color: rgb(70, 70, 70); font-size: 25px; margin-bottom: -50px;">^</p><br>
   <br><h2 style="text-align: center; color: rgb(70, 70, 70); font-size: 30px;">Select Delivery Location</h2><br>
-
-
-
+  
 
   </div><!-- END OF SELECT ADDRESS - ONLY SHOWN WHEN DELIVERY IS ACTIVE -->
 
@@ -39,6 +37,41 @@
  
   </div>
 
+
+
+
+  <div class="board-message-container">
+    <h2 style="text-align: left;" class="main-title">Elevate Your Beatherder Sales without Missing a Beat—Join festival-food.co.uk! 🍔🎶</h2><br><br><br>
+    <p class="main-text-board-message">The buzz for the upcoming <span id="status">Beatherder</span> Festival is real, and we're guessing you're as pumped as we are! Your mouthwatering food and drink is already a festival favorite, but what if you could reach even more happy campers?. <br><br><br>
+        Allow us to introduce ourselves: We're <span id="status">festival-food</span>, and we've cooked up a tasty proposal for you. Imagine this: festival-goers chilling at their tents, away from the stage but still in the Beatherder groove. They're feeling peckish but don't want to leave their cozy enclave. Enter our service, where they can order your delicious offerings right to their tent!<br><br><br>
+        <b>Here's why this is a recipe for success you won't want to miss:</b><br></p>
+        <ul style="font-size: 23px;">
+        <li>🍴<b>More Sales:</b> Increase your reach to campers who may not make the journey to your stall but still crave quality eats.</li><br><br>
+        <li>🎉 <b>Enhanced Visibility:</b> Your culinary delights will be showcased on our user-friendly website, stirring up even more appetite for your brand.</li><br><br>
+        <li>🍃 <b>Eco-Conscious:</b> Just like you, we care about our planet. All our deliveries will be made using sustainable, biodegradable packaging.</li><br><br>
+    </ul>
+        
+        <p class="main-text-board-message"><b>Here's how it rolls:</b><br></p>
+        <ol style="font-size: 23px;" type="1">
+            <li><b>Simple Ordering:</b> Festival-goers place an order from your stall through our website.</li><br><br>
+                <li><b>Fresh & Fast:</b> Our dedicated "Feast Runners" zip over to your stall to pick up the orders.</li><br><br>
+                    <li><b>Delivered to the Door...of Their Tent:</b> We ensure your dishes reach the customer's tent as fresh as when they left your stall.</li><br><br>
+                </ol>
+                <p class="main-text-board-message">
+        We're looking for your partnership and the go-ahead to deliver your gastronomic creations during Beatherder. And don't worry—our responsibility only covers the food during its journey from your stall to the tents.<br><br>
+        So, what do you say? Ready to amplify your Beatherder sales and reach more bellies this year? Let's chat soon to sort out the delicious details!<br><br><br>
+        Here's to making Beatherder 2024 a feast for the senses!<br><br>
+        Best bites and good vibes, the festival-food Team<br><br><br>
+        P.S. Got questions or suggestions? We're all ears and eager to cook up something unforgettable together!<br><br><br>
+
+    
+    </p>
+
+
+    <button class="pill-button" onclick="createEmail()">Contact Us</button><br><br>
+    <button class="pill-button-green" onclick="openPDF()">View our brochure (PDF)</button>
+    
+</div>
 
 
 
@@ -103,8 +136,8 @@
        
         <h5 class="card-title">{{item.name}}</h5>
         <p class="card-price">£{{item.price}}</p>
-        <button class="btn-order-item add-to-basket" (click)="addItemToBasket(item)">Add to basket</button>
-        <span *ngIf="item.inBasket" class="is-active">In basket</span>
+        <button class="btn-order-item add-to-basket">Add to basket</button>
+      <!--  <span *ngIf="item.inBasket" class="is-active">In basket</span>-->
       </div>
     </div>
   </div>
@@ -356,7 +389,7 @@
     
 <div  style="text-align: center;" id="onlyAtBH">   
   <p style="text-align: center;" class="main-text">Only available at</p><br>
-  <img style="text-align: center;" src="https://i.imgur.com/u8N7oFu.png" alt="Beatherder" id="bh-image">
+  <img style="max-width: 250px; text-align: center;" src="https://i.imgur.com/u8N7oFu.png" alt="Beatherder" id="bh-image">
 </div>
     <br><br><br>
     <div style="text-align: center;" *ngIf="user">
